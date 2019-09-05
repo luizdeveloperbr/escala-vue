@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Emissor de Escala</title>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+</head>
+<body>
+<div id="wrap">
+<div id="app" style="margin: 0 25px">
+  <div class="panel panel-primary">
+  <div class="panel panel-heading">
+  <select v-model.number="monthpick" style="color: black!important">
+  <option value="0">janeiro</option>
+  <option value="1">fevereiro</option>
+  <option value="2">março</option>
+  <option value="3">abril</option>
+  <option value="4">maio</option>
+  <option value="5">junho</option>
+  <option value="6">julho</option>
+  <option value="7">agosto</option>
+  <option value="8">setembro</option>
+  <option value="9">outubro</option>
+  <option value="10">novembro</option>
+  <option value="11">dezembro</option>
+  </select>
+  </div>
+<table class="table table-bordered">
+<thead><!--incio da linha com os titulos-->
+<tr>
+  <th></th>
+  <th></th>
+  <th>Domingo</th>
+  <th></th>
+  <th>Domingo</th>
+  <th></th>
+  <th>Domingo</th>
+  <th></th>
+  <th>Domingo</th>
+  <th></th>
+  <th v-if="condFivDom">Domingo</th>
+  <th v-if="condFivDom"></th>
+  <th style="min-width: 200px" ></th>
+</tr>
+<tr>
+	<th>matricula</th>
+	<th>colaborador</th>
+  <th><date-dom :qnt-weeks="0" :monthy="monthpick"></date-dom></th>
+	<th>folga</th>
+	<th><date-dom :qnt-weeks="1" :monthy="monthpick"></date-dom></th>
+	<th>folga</th>
+	<th><date-dom :qnt-weeks="2" :monthy="monthpick"></date-dom></th>
+	<th>folga</th>
+	<th><date-dom :qnt-weeks="3" :monthy="monthpick"></date-dom></th>
+	<th>folga</th>
+  <th v-if="condFivDom"><date-dom :qnt-weeks="4" :monthy="monthpick"></date-dom></th>
+<th v-if="condFivDom">f0lga</th>
+	<th style="min-width: 200px" >assinatura</th>
+</tr><!--fim da linha com os titulos-->
+</thead>
+<tbody>
+<tr  v-for="colab in organico">
+  <td>{{colab.mat}}</td>
+  <td>{{colab.nome}}</td>
+	<td> <!--dropdown para seleção dos horarios-->
+<time-entrance :timee="timeList"></time-entrance>
+</td>
+<td><!-- data da folga-->
+  <folgga ddom="20" :monthf="monthpick"></folgga>
+</td>
+<td> <!--dropdown para seleção dos horarios-->
+<time-entrance :timee="timeList"></time-entrance>
+</td>
+<td><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td> <!--dropdown para seleção dos horarios-->
+ 	<time-entrance :timee="timeList"></time-entrance>
+</td>
+<td><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td> <!--dropdown para seleção dos horarios-->
+ 	<time-entrance :timee="timeList"></time-entrance>
+</td>
+<td><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td v-if="condFivDom">
+  <time-entrance :timee="timeList"></time-entrance>
+</td>
+<td v-if="condFivDom"><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td>ass<!--assinatura--></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+  $(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/locale/pt-br.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+</html>
