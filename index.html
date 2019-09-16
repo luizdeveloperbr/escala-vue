@@ -4,13 +4,14 @@
 	<title>Emissor de Escala</title>
   <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
 <div id="wrap">
 <div id="app" style="margin: 0 25px">
-  <div class="panel panel-primary">
-  <div class="panel panel-heading">
+  <div class="message">
+  <div class="message-header">
   <select v-model.number="monthpick" style="color: black!important">
   <option value="0">janeiro</option>
   <option value="1">fevereiro</option>
@@ -26,7 +27,7 @@
   <option value="11">dezembro</option>
   </select>
   </div>
-<table class="table table-bordered">
+<table class="table message-body is-borded">
 <thead><!--incio da linha com os titulos-->
 <tr>
   <th></th>
@@ -45,14 +46,14 @@
 </tr>
 <tr>
 	<th>matricula</th>
-	<th>colaborador</th>
-  <th><date-dom :qnt-weeks="0" :monthy="monthpick"></date-dom></th>
+	<th><button type="button"  @click="addHorario">+</button></th>
+  <th><date-dom qnt-weeks="0" :monthy="monthpick"></date-dom></th>
 	<th>folga</th>
-	<th><date-dom :qnt-weeks="1" :monthy="monthpick"></date-dom></th>
+	<th><date-dom qnt-weeks="1" :monthy="monthpick"></date-dom></th>
 	<th>folga</th>
-	<th><date-dom :qnt-weeks="2" :monthy="monthpick"></date-dom></th>
+	<th><date-dom qnt-weeks="2" :monthy="monthpick"></date-dom></th>
 	<th>folga</th>
-	<th><date-dom :qnt-weeks="3" :monthy="monthpick"></date-dom></th>
+	<th><date-dom qnt-weeks="3" :monthy="monthpick"></date-dom></th>
 	<th>folga</th>
   <th v-if="condFivDom"><date-dom :qnt-weeks="4" :monthy="monthpick"></date-dom></th>
 <th v-if="condFivDom">f0lga</th>
@@ -67,16 +68,16 @@
 <time-entrance :timee="timeList"></time-entrance>
 </td>
 <td><!-- data da folga-->
-  <folgga ddom="20" :monthf="monthpick"></folgga>
+  <folgga></folgga>
 </td>
 <td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timee="timeList"></time-entrance>
 </td>
-<td><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timee="timeList"></time-entrance>
 </td>
-<td><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td><folgga ddom="25" :monthf="monthpick"></folgga></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timee="timeList"></time-entrance>
 </td>
@@ -92,15 +93,14 @@
 </div>
 </div>
 </body>
-<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript">
-  $(function () {
-  $('[data-toggle="popover"]').popover()
-})
-</script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/moment.js"></script>
-<script type="text/javascript" src="js/vue.js"></script>
-<script type="text/javascript" src="js/locale/pt-br.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pouchdb@7.1.1/dist/pouchdb.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/vuepouch.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript">
+  document.getElementsByClassName('flat').flatpickr({dateFormat: "Z"});
+</script>
 </html>

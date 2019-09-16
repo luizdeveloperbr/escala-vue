@@ -5,44 +5,62 @@ Vue.component('dateDom', {
 		daydomshow: function () {
 			return moment(this.fullDate).add(this.qntWeeks, 'week').format('L')
 		},
-		initDate: function () {
-			return moment({
-				year: 2019,
-				month: this.monthy
-			}).startOf('month').toObject()
-		},
 		fullDate: function () {
-			if (moment(this.initDate).weekday() == 0) {
-				return moment(this.initDate).toObject()
+			var initDate = moment({year: 2019,month: this.monthy}).startOf('month').toObject();
+			if (moment(initDate).weekday() == 0) {
+				return moment(initDate).toObject()
 			} else {
-				return moment(this.initDate).startOf('week').add(1, 'week').toObject()
+				return moment(initDate).startOf('week').add(1, 'week').toObject()
 			}
 		},
-	}
+	},
 });
 Vue.component('timeEntrance', {
-		template:'<div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:100%">{{selec}}</button><ul class="dropdown-menu" aria-labelledby="dropdownMenu1"><li v-for="i in timee"><a href="#" @click="selec = 1">{{i}}</a></li></ul></div>',
+		template:'<div class="dropdown is-hoverable">'+
+  '<div class="dropdown-trigger">'+
+    '<button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">'+
+      '<span>{{selec}}</span>'+
+      '<span class="icon is-small">'+
+        '<i class="fas fa-angle-down" aria-hidden="true"></i>'+
+      '</span>'+
+    '</button>'+
+  '</div>'+
+  '<div class="dropdown-menu" id="dropdown-menu4" role="menu">'+
+    '<div class="dropdown-content">'+
+      '<div class="dropdown-item" v-for="t in timee">'+
+       '<a :href="t.cod">{{t.hora}}</a>'+
+      '</div>'+
+    '</div>'+
+  '</div>'+
+'</div>',
 		props: ['timee'],
 		data: function (){
-			return {selec: 0}
+			return {
+				selec: "horario"
+			}
+
 		},
 	}
 );
 Vue.component('folgga', {
-	template: '<button type="button" class="btn btn-default" data-toggle="popover" data-html="true" data-placement="top" :data-content=fSeg>0</button>',
-	props: ['ddom', 'monthf'],
+	template: '<input type="text" class="flat" v-model="fDate">',
+	props: ['fDate'],
 	computed: {
-		fSeg: function () {
-			var objDate = {day: this.ddom, month: this.monthf, year: 2019};
-			var beginButton = '<a href="#" class="link btn btn-sm btn-primary">';
-			return '<div class="btn-group" role="group">' + beginButton + moment(objDate).add(1, 'day').format("DD/MMM") + '</a>' + beginButton + moment(objDate).add(2, 'day').format("DD/MMM") + '</a></div>';
-		},
+        fTer: function (){
+			return moment(this.fDate).add(2, 'day').format("DD/MMM");
+        },
 	},
 });
 var app = new Vue({
 	el: '#app',
+	pouchdb:{
+        	horarios:{
+        		localDB: "horarios",
+        	}
+        },
 	data: {
 		monthpick: 0,
+        domOne: 'teste',
 		organico: [{
 				mat: 62136,
 				nome: 'elton dos santos do nascimento'
@@ -52,7 +70,12 @@ var app = new Vue({
 				nome: 'elimacio dias do nascimento'
 			}
 		],
-		timeList:['08:00-14:15', '12:00-18:00', '16:00-19:00']
+		//timeList:[{cod: 3526, hora:'08:00-14:15'}, {cod: 6985, hora:'12:00-18:00'}, {cod: 8563, hora:'16:00-19:00'}, {cod: 83945, hora:'07:00-11:15'}]
+	},
+	methods:{
+		addHorario: function(){
+			return this.$pouchdbRefs.horarios.put('timeList', {cod: 895, hora: "teste"})
+		},
 	},
 	computed: {
 		condFivDom: function () {
@@ -65,10 +88,10 @@ var app = new Vue({
 				return false
 			}
 		},
-		firstweek: function() {
-			return 'null'
-		},
-	}
+		timeList: function() {
+			return this.horarios.timeList
+		}
+	},
 });
 var time = moment().format();
 moment().locale('pt-br');
