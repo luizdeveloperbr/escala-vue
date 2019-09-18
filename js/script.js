@@ -1,12 +1,12 @@
-Vue.component('dateDom', {
-	template: '<p>{{daydomshow}}</p>',
-	props: ['qntWeeks', 'monthy'],
+Vue.component('domingo', {
+	template: '<p>{{display}}</p>',
+	props: ['addWeeks', 'getDate'],
 	computed: {
-		daydomshow: function () {
-			return moment(this.fullDate).add(this.qntWeeks, 'week').format('L')
+		display: function () {
+			return moment(this.validateDate).add(this.addWeeks, 'week').format('L')
 		},
-		fullDate: function () {
-			var initDate = moment({year: 2019,month: this.monthy}).startOf('month').toObject();
+		validateDate: function () {
+			var initDate = moment(getDate).startOf('month').toObject();
 			if (moment(initDate).weekday() == 0) {
 				return moment(initDate).toObject()
 			} else {
@@ -28,7 +28,7 @@ Vue.component('timeEntrance', {
   '<div class="dropdown-menu" id="dropdown-menu4" role="menu">'+
     '<div class="dropdown-content">'+
       '<div class="dropdown-item" v-for="t in timee">'+
-       '<a :href="t.cod">{{t.hora}}</a>'+
+       '<a href="#" @click="selec = t.cod">{{t.hora}}</a>'+
       '</div>'+
     '</div>'+
   '</div>'+

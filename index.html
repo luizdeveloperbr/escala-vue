@@ -6,26 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/plugins/monthSelect/style.css">
 </head>
 <body>
 <div id="wrap">
 <div id="app" style="margin: 0 25px">
   <div class="message">
   <div class="message-header">
-  <select v-model.number="monthpick" style="color: black!important">
-  <option value="0">janeiro</option>
-  <option value="1">fevereiro</option>
-  <option value="2">março</option>
-  <option value="3">abril</option>
-  <option value="4">maio</option>
-  <option value="5">junho</option>
-  <option value="6">julho</option>
-  <option value="7">agosto</option>
-  <option value="8">setembro</option>
-  <option value="9">outubro</option>
-  <option value="10">novembro</option>
-  <option value="11">dezembro</option>
-  </select>
+<input type="text" class="input" id="monthpickr">
   </div>
 <table class="table message-body is-borded">
 <thead><!--incio da linha com os titulos-->
@@ -97,10 +85,17 @@
 <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.1.1/dist/pouchdb.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/vuepouch.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/l10n/pt.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/plugins/monthSelect/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript">
+document.getDocumentById('monthpickr').flatpickr({locale: "pt", plugins:[new monthSelectPlugin({
+          dateFormat: "Z", //defaults to "F Y"
+          altFormat: "F Y", //defaults to "F Y"
+        })
+    ]});
   document.getElementsByClassName('flat').flatpickr({dateFormat: "Z"});
 </script>
 </html>
