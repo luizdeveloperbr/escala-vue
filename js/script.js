@@ -6,7 +6,7 @@ Vue.component('domingo', {
 			return moment(this.validateDate).add(this.addWeeks, 'week').format('L')
 		},
 		validateDate: function () {
-			var initDate = moment(getDate).startOf('month').toObject();
+			var initDate = moment(this.getDate).startOf('month').toObject();
 			if (moment(initDate).weekday() == 0) {
 				return moment(initDate).toObject()
 			} else {
@@ -43,7 +43,7 @@ Vue.component('timeEntrance', {
 	}
 );
 Vue.component('folgga', {
-	template: '<input type="text" class="flat" v-model="fDate">',
+	template: '<input type="text" class="flat input" v-model="fDate">',
 	props: ['fDate'],
 	computed: {
         fTer: function (){
@@ -59,7 +59,7 @@ var app = new Vue({
         	}
         },
 	data: {
-		monthpick: 0,
+		monthpick: null,
         domOne: 'teste',
 		organico: [{
 				mat: 62136,
@@ -70,7 +70,6 @@ var app = new Vue({
 				nome: 'elimacio dias do nascimento'
 			}
 		],
-		//timeList:[{cod: 3526, hora:'08:00-14:15'}, {cod: 6985, hora:'12:00-18:00'}, {cod: 8563, hora:'16:00-19:00'}, {cod: 83945, hora:'07:00-11:15'}]
 	},
 	methods:{
 		addHorario: function(){
@@ -79,10 +78,7 @@ var app = new Vue({
 	},
 	computed: {
 		condFivDom: function () {
-			if (moment({
-				year: 2019,
-				month: this.monthpick
-			}).startOf('month').weekday() == 0) {
+			if (moment(this.monthpick).startOf('month').weekday() == 0) {
 				return true
 			} else {
 				return false
