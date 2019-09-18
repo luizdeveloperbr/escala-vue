@@ -1,0 +1,22 @@
+{
+  "name": "escala-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizdeveloperbr/escala-vue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luizdeveloperbr/escala-vue/issues"
+  },
+  "homepage": "https://github.com/luizdeveloperbr/escala-vue#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
