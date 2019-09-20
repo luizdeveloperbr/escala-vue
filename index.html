@@ -9,11 +9,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/plugins/monthSelect/style.css">
 </head>
 <body>
-<div id="wrap">
-<div id="app" style="margin: 0 25px">
+<div id="app">
   <div class="message" style="margin-bottom: 0">
   <div class="message-header">
-<input type="text" class="input" id="monthpickr" v-model="monthpick">
+  <flat-pickr :config="mconfig" v-model="monthpick" :class="mclass" />
   </div>
   </div>
   <div class="message is-dark">
@@ -56,29 +55,28 @@
 <time-entrance :timee="timeList"></time-entrance>
 </td>
 <td><!-- data da folga-->
-  <folgga></folgga>
+  <folgga :get-date="monthpick" add-weeks="1"></folgga>
 </td>
 <td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timee="timeList"></time-entrance>
 </td>
-<td><folgga></folgga></td>
+<td><folgga :get-date="monthpick" add-weeks="2"></folgga></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timee="timeList"></time-entrance>
 </td>
-<td><folgga ddom="25" :monthf="monthpick"></folgga></td>
+<td><folgga :get-date="monthpick" add-weeks="3"></folgga></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timee="timeList"></time-entrance>
 </td>
-<td><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td><folgga :get-date="monthpick" add-weeks="4"></folgga></td>
 <td v-if="condFivDom">
   <time-entrance :timee="timeList"></time-entrance>
 </td>
-<td v-if="condFivDom"><flat-pickr></flat-pickr></td>
+<td v-if="condFivDom"><folgga :get-date="monthpick" add-weeks="5"></folgga></td>
 </tr>
 </tbody>
 </table>
   </div>
-</div>
 </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
@@ -91,12 +89,4 @@
 <script src="https://cdn.jsdelivr.net/npm/vue-flatpickr-component@8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript">
-document.getElementById('monthpickr').flatpickr({locale: "pt", plugins:[new monthSelectPlugin({
-          altFormat: "F Y", //defaults to "F Y"
-          dateFormat: "Z", //defaults to "F Y"
-        })
-    ]});
-  //document.getElementsByClassName('flat').flatpickr({dateFormat: "Z"});
-</script>
 </html>

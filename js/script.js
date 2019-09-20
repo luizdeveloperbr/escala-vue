@@ -36,15 +36,15 @@ Vue.component('timeEntrance', {
 		props: ['timee'],
 		data: function (){
 			return {
-				selec: "horario"
+				selec: ""
 			}
 
 		},
 	}
 );
 Vue.component('folgga', {
-	template: '<div><flat-pickr :config="config" :class="input"></flatpickr></div>',//<input type="text" class="flat input" v-model="fDate">
-	props: ['getdate'],
+	template: '<div><flat-pickr :config="config" :class="input"></flat-pickr></div>',
+	props: ['getDate', 'addWeeks'],
     data: function(){
         return {
             input: "input",
@@ -53,14 +53,23 @@ Vue.component('folgga', {
 	computed: {
         config:function(){
             return {
-                dateFormat: "D d/M",
-                minDate: this.getdate,
-                maxDate: this.fTer,
+                dateFormat: "d/M",
+                minDate: this.minDate,
+                maxDate: this.maxDate,
                 locale: "pt"
             }
         },
-        fTer: function (){
-			return moment(this.getdate).add(9, 'day').format("YYYY-MM-DD");
+        minDate: function () {
+			var initDate = moment(this.getDate).startOf('month').toObject();
+			if (moment(initDate).weekday() == 0) {
+				var fiveDom =  moment(initDate).subtract(1, 'week').toDate();
+               return moment(fiveDom).add(this.addWeeks, 'week').toDate()
+			} else {
+				return moment(initDate).startOf('week').add(this.addWeeks, 'week').toDate()
+			}
+		},
+        maxDate: function (){
+			return moment(this.minDate).add(9, 'day').toDate();
         },
 	},
     components:{vuefp},
@@ -74,8 +83,16 @@ var app = new Vue({
         	}
         },
 	data: {
+        mclass: "input",
+        mconfig:{
+            locale: "pt",
+            plugins:[new monthSelectPlugin({
+            altFormat: "F Y",
+            altInput:true,
+            dateFormat: "Z", //defaults to "F Y"
+        })
+    ]},
 		monthpick: null,
-        domOne: 'teste',
 		organico: [{
 				mat: 62136,
 				nome: 'elton dos santos do nascimento'
@@ -104,5 +121,4 @@ var app = new Vue({
 		}
 	},
 });
-var time = moment().format();
 moment().locale('pt-br');
