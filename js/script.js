@@ -43,14 +43,29 @@ Vue.component('timeEntrance', {
 	}
 );
 Vue.component('folgga', {
-	template: '<input type="text" class="flat input" v-model="fDate">',
-	props: ['fDate'],
+	template: '<div><flat-pickr :config="config" :class="input"></flatpickr></div>',//<input type="text" class="flat input" v-model="fDate">
+	props: ['getdate'],
+    data: function(){
+        return {
+            input: "input",
+            }
+    },
 	computed: {
+        config:function(){
+            return {
+                dateFormat: "D d/M",
+                minDate: this.getdate,
+                maxDate: this.fTer,
+                locale: "pt"
+            }
+        },
         fTer: function (){
-			return moment(this.fDate).add(2, 'day').format("DD/MMM");
+			return moment(this.getdate).add(9, 'day').format("YYYY-MM-DD");
         },
 	},
+    components:{vuefp},
 });
+var vuefp = Vue.component('flat-pickr', VueFlatpickr);
 var app = new Vue({
 	el: '#app',
 	pouchdb:{
@@ -67,7 +82,7 @@ var app = new Vue({
 			},
 			{
 				mat: 41949,
-				nome: 'elimacio dias do nascimento'
+				nome: 'elimacio dias do nascimento',
 			}
 		],
 	},

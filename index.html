@@ -34,7 +34,7 @@
   <th v-if="condFivDom"></th>
 </tr>
 <tr>
-	<th>matricula</th>
+	<th>Mat</th>
 	<th><button type="button"  @click="addHorario">+</button></th>
   <th><domingo add-weeks="0" :get-date="monthpick"></domingo></th>
 	<th>folga</th>
@@ -61,7 +61,7 @@
 <td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timee="timeList"></time-entrance>
 </td>
-<td></td>
+<td><folgga></folgga></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timee="timeList"></time-entrance>
 </td>
@@ -73,7 +73,7 @@
 <td v-if="condFivDom">
   <time-entrance :timee="timeList"></time-entrance>
 </td>
-<td v-if="condFivDom"><folgga ddom="20" :monthf="monthpick"></folgga></td>
+<td v-if="condFivDom"><flat-pickr></flat-pickr></td>
 </tr>
 </tbody>
 </table>
@@ -88,14 +88,15 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/l10n/pt.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/plugins/monthSelect/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-flatpickr-component@8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript">
 document.getElementById('monthpickr').flatpickr({locale: "pt", plugins:[new monthSelectPlugin({
-          dateFormat: "Z", //defaults to "F Y"
           altFormat: "F Y", //defaults to "F Y"
+          dateFormat: "Z", //defaults to "F Y"
         })
     ]});
-  document.getElementsByClassName('flat').flatpickr({dateFormat: "Z"});
+  //document.getElementsByClassName('flat').flatpickr({dateFormat: "Z"});
 </script>
 </html>
