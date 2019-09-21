@@ -48,7 +48,7 @@
 </tr><!--fim da linha com os titulos-->
 </thead>
 <tbody>
-<tr  v-for="colab in organico">
+<tr  v-for="colab in colabList">
   <td>{{colab.mat}}</td>
   <td>{{colab.nome}}</td>
 	<td> <!--dropdown para seleção dos horarios-->
@@ -75,8 +75,39 @@
 <td v-if="condFivDom"><folgga :get-date="monthpick" add-weeks="5"></folgga></td>
 </tr>
 </tbody>
+<tfoot>
+<a href="#" @click="modal = true">+ colaborador</a>
+</tfoot>
 </table>
   </div>
+  <div class="modal" :class="{ 'is-active': modal}">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Adicionar Colaborador</p>
+      <button class="delete" aria-label="close" @click="modal = false"></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+      <div class="field">
+  <label class="label">Matricula</label>
+  <div class="control">
+    <input class="input" v-model="colabMat" type="text" placeholder="Ex. 564733">
+  </div>
+</div>
+<div class="field">
+  <label class="label">Nome completo</label>
+  <div class="control">
+    <input class="input" v-model="colabNome" type="text" placeholder="Digite...">
+  </div>
+</div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" @click="addColab">Save changes</button>
+      <button class="button">Cancel</button>
+    </footer>
+  </div>
+</div>
 </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>

@@ -6,7 +6,7 @@ Vue.component('domingo', {
 			return moment(this.validateDate).add(this.addWeeks, 'week').format('L')
 		},
 		validateDate: function () {
-			var initDate = moment(this.getDate).startOf('month').toObject();
+			var initDate = moment(this.getDate, "MMMM YYYY", "pt-br").startOf('month').toObject();
 			if (moment(initDate).weekday() == 0) {
 				return moment(initDate).toObject()
 			} else {
@@ -60,7 +60,7 @@ Vue.component('folgga', {
             }
         },
         minDate: function () {
-			var initDate = moment(this.getDate).startOf('month').toObject();
+			var initDate = moment(this.getDate, "MMMM YYYY", "pt-br").startOf('month').toObject();
 			if (moment(initDate).weekday() == 0) {
 				var fiveDom =  moment(initDate).subtract(1, 'week').toDate();
                return moment(fiveDom).add(this.addWeeks, 'week').toDate()
@@ -84,33 +84,26 @@ var app = new Vue({
         },
 	data: {
         mclass: "input",
+        modal: false,
         mconfig:{
             locale: "pt",
             plugins:[new monthSelectPlugin({
-            altFormat: "F Y",
-            altInput:true,
-            dateFormat: "Z", //defaults to "F Y"
+            dateFormat: "F Y", //defaults to "F Y"
         })
     ]},
 		monthpick: null,
-		organico: [{
-				mat: 62136,
-				nome: 'elton dos santos do nascimento'
-			},
-			{
-				mat: 41949,
-				nome: 'elimacio dias do nascimento',
-			}
-		],
 	},
 	methods:{
 		addHorario: function(){
 			return this.$pouchdbRefs.horarios.put('timeList', {cod: 895, hora: "teste"})
 		},
+        addColab:function(){
+            return this.$pouchdbRefs.horarios.put('colabList', {mat: this.colabMat, nome: this.colabNome})
+        },
 	},
 	computed: {
 		condFivDom: function () {
-			if (moment(this.monthpick).startOf('month').weekday() == 0) {
+			if (moment(this.monthpick, "MMMM YYYY", "pt-br").startOf('month').weekday() == 0) {
 				return true
 			} else {
 				return false
@@ -118,7 +111,10 @@ var app = new Vue({
 		},
 		timeList: function() {
 			return this.horarios.timeList
-		}
+		},
+        colabList:function(){
+            return this.horarios.colabList
+        },
 	},
 });
 moment().locale('pt-br');
