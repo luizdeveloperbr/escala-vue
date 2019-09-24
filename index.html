@@ -7,16 +7,19 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/plugins/monthSelect/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="app">
-  <div class="message" style="margin-bottom: 0">
+  <div class="panel container" >
+  <div class="panel-header">
+  <div class="message" id="mpickr">
   <div class="message-header">
-  <flat-pickr :config="mconfig" v-model="monthpick" :class="mclass" />
+  <flat-pickr :config="mconfig" v-model="monthpick" :class="{input:true}" />
   </div>
   </div>
-  <div class="message is-dark">
-<table class="table message-body is-striped">
+  <div class="panel-block">
+<table class="table message-body has-text-centered is-striped is-size-7">
 <thead><!--incio da linha com os titulos-->
 <tr>
   <th></th>
@@ -34,7 +37,7 @@
 </tr>
 <tr>
 	<th>Mat</th>
-	<th><button type="button"  @click="addHorario">+</button></th>
+	<th>Colaborador</th>
   <th><domingo add-weeks="0" :get-date="monthpick"></domingo></th>
 	<th>folga</th>
 	<th><domingo add-weeks="1" :get-date="monthpick"></domingo></th>
@@ -44,7 +47,7 @@
 	<th><domingo add-weeks="3" :get-date="monthpick"></domingo></th>
 	<th>folga</th>
   <th v-if="condFivDom"><domingo add-weeks="4" :get-date="monthpick"></domingo></th>
-<th v-if="condFivDom">f0lga</th>
+<th v-if="condFivDom">folga</th>
 </tr><!--fim da linha com os titulos-->
 </thead>
 <tbody>
@@ -52,33 +55,35 @@
   <td>{{colab.mat}}</td>
   <td>{{colab.nome}}</td>
 	<td> <!--dropdown para seleção dos horarios-->
-<time-entrance :timee="timeList"></time-entrance>
+<time-entrance :timelist="timeList"></time-entrance>
 </td>
 <td><!-- data da folga-->
-  <folgga :get-date="monthpick" add-weeks="1"></folgga>
+  <folga :get-date="monthpick" add-weeks="1"></folga>
 </td>
 <td> <!--dropdown para seleção dos horarios-->
-<time-entrance :timee="timeList"></time-entrance>
+<time-entrance :timelist="timeList"></time-entrance>
 </td>
-<td><folgga :get-date="monthpick" add-weeks="2"></folgga></td>
+<td><folga :get-date="monthpick" add-weeks="2"></folga></td>
 <td> <!--dropdown para seleção dos horarios-->
- 	<time-entrance :timee="timeList"></time-entrance>
+ 	<time-entrance :timelist="timeList"></time-entrance>
 </td>
-<td><folgga :get-date="monthpick" add-weeks="3"></folgga></td>
+<td><folga :get-date="monthpick" add-weeks="3"></folga></td>
 <td> <!--dropdown para seleção dos horarios-->
- 	<time-entrance :timee="timeList"></time-entrance>
+ 	<time-entrance :timelist="timeList"></time-entrance>
 </td>
-<td><folgga :get-date="monthpick" add-weeks="4"></folgga></td>
+<td><folga :get-date="monthpick" add-weeks="4"></folga></td>
 <td v-if="condFivDom">
-  <time-entrance :timee="timeList"></time-entrance>
+  <time-entrance :timelist="timeList"></time-entrance>
 </td>
-<td v-if="condFivDom"><folgga :get-date="monthpick" add-weeks="5"></folgga></td>
+<td v-if="condFivDom"><folga :get-date="monthpick" add-weeks="5"></folga></td>
+</tr>
+<tr>
+<td><a href="#" @click="modal = true" class="button">+ </a></td>
+<td><a href="#" @click="hmodal = true" class="button">+ </a></td>
 </tr>
 </tbody>
-<tfoot>
-<a href="#" @click="modal = true">+ colaborador</a>
-</tfoot>
 </table>
+  </div>
   </div>
   <div class="modal" :class="{ 'is-active': modal}">
   <div class="modal-background"></div>
@@ -103,8 +108,36 @@
 </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-success" @click="addColab">Save changes</button>
-      <button class="button">Cancel</button>
+      <button class="button is-success" @click="addColab">Salvar</button>
+      <button class="button" @click="modal = false">Cancelar</button>
+    </footer>
+  </div>
+</div>
+  <div class="modal" :class="{ 'is-active': hmodal}">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Adicionar horario</p>
+      <button class="delete" aria-label="close" @click="hmodal = false"></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+      <div class="field">
+  <label class="label">Codigo</label>
+  <div class="control">
+    <input class="input" v-model="horaCod" type="text" placeholder="Ex. 564733">
+  </div>
+</div>
+<div class="field">
+  <label class="label">tempo por escrito</label>
+  <div class="control">
+    <input class="input" v-model="horaEscrito" type="text" placeholder="10:00-13:15/13:30-16:15">
+  </div>
+</div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" @click="addHorario">Salvar</button>
+      <button class="button" @click="hmodal = false">Cancelar</button>
     </footer>
   </div>
 </div>

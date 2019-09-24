@@ -18,40 +18,38 @@ Vue.component('domingo', {
 Vue.component('timeEntrance', {
 		template:'<div class="dropdown is-hoverable">'+
   '<div class="dropdown-trigger">'+
-    '<button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">'+
-      '<span>{{selec}}</span>'+
-      '<span class="icon is-small">'+
-        '<i class="fas fa-angle-down" aria-hidden="true"></i>'+
-      '</span>'+
+    '<button class="button" aria-haspopup="true" @click="isActive = true" aria-controls="dropdown-menu3">'+
+      '<span class="is-size-7">cod: {{cod}} <br/> {{hora}}</span>'+
     '</button>'+
   '</div>'+
-  '<div class="dropdown-menu" id="dropdown-menu4" role="menu">'+
+  '<div class="dropdown-menu" id="dropdown-menu3" role="menu">'+
     '<div class="dropdown-content">'+
-      '<div class="dropdown-item" v-for="t in timee">'+
-       '<a href="#" @click="selec = t.cod">{{t.hora}}</a>'+
+      '<div class="dropdown-item" v-for="t in timelist">'+
+       '<a href="#" @click="cod = t.cod;hora = t.hora">{{t.hora}}</a>'+
       '</div>'+
     '</div>'+
   '</div>'+
 '</div>',
-		props: ['timee'],
+		props: ['timelist'],
 		data: function (){
 			return {
-				selec: ""
+				cod: "",
+                hora: "",
 			}
 
 		},
 	}
 );
-Vue.component('folgga', {
-	template: '<div><flat-pickr :config="config" :class="input"></flat-pickr></div>',
-	props: ['getDate', 'addWeeks'],
+Vue.component('folga', {
+	template: '<div class="is-small" style="width: 72px"><flat-pickr :config="config" v-model="input" :class="{input:true}"></flat-pickr></div>',
+	props: ['getDate', 'addWeeks',],
     data: function(){
         return {
-            input: "input",
-            }
+            input: "",
+        }
     },
-	computed: {
-        config:function(){
+        computed: {
+        config: function(){
             return {
                 dateFormat: "d/M",
                 minDate: this.minDate,
@@ -83,22 +81,26 @@ var app = new Vue({
         	}
         },
 	data: {
-        mclass: "input",
         modal: false,
+        hmodal: false,
+        horaCod:null,
+        horaEscrito:"",
+        colabMat: null,
+        colabNome: "",
         mconfig:{
             locale: "pt",
             plugins:[new monthSelectPlugin({
             dateFormat: "F Y", //defaults to "F Y"
         })
     ]},
-		monthpick: null,
+		monthpick: "",
 	},
 	methods:{
 		addHorario: function(){
-			return this.$pouchdbRefs.horarios.put('timeList', {cod: 895, hora: "teste"})
+			return this.$pouchdbRefs.horarios.put('timeList', {cod: this.horaCod, hora: this.horaEscrito})
 		},
         addColab:function(){
-            return this.$pouchdbRefs.horarios.put('colabList', {mat: this.colabMat, nome: this.colabNome})
+            return this.$pouchdbRefs.horarios.put('colabList', {mat: this.colabMat, nome: this.colabNome, month:[{domingo:"2019-12-25",folga: 5,horario:{cod:123,hora:"testehora"}}]})
         },
 	},
 	computed: {
