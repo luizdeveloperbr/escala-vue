@@ -18,7 +18,7 @@ Vue.component('domingo', {
 Vue.component('timeEntrance', {
 		template:'<div class="dropdown is-hoverable">'+
   '<div class="dropdown-trigger">'+
-    '<button class="button" aria-haspopup="true" @click="isActive = true" aria-controls="dropdown-menu3">'+
+    '<button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">'+
       '<span class="is-size-7">cod: {{cod}} <br/> {{hora}}</span>'+
     '</button>'+
   '</div>'+
@@ -41,7 +41,7 @@ Vue.component('timeEntrance', {
 	}
 );
 Vue.component('folga', {
-	template: '<div class="is-small" style="width: 72px"><flat-pickr :config="config" v-model="input" :class="{input:true}"></flat-pickr></div>',
+	template: '<div style="width: 55px"><flat-pickr :config="config" v-model="input" class="is-size-7" :class="{input:true}"></flat-pickr></div>',
 	props: ['getDate', 'addWeeks',],
     data: function(){
         return {

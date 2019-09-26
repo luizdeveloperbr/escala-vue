@@ -18,8 +18,9 @@
   <flat-pickr :config="mconfig" v-model="monthpick" :class="{input:true}" />
   </div>
   </div>
+  </div>
   <div class="panel-block">
-<table class="table message-body has-text-centered is-striped is-size-7">
+<table class="table has-text-centered is-striped is-size-7">
 <thead><!--incio da linha com os titulos-->
 <tr>
   <th></th>
@@ -52,8 +53,8 @@
 </thead>
 <tbody>
 <tr  v-for="colab in colabList">
-  <td>{{colab.mat}}</td>
-  <td>{{colab.nome}}</td>
+  <td id="cmat">{{colab.mat}}</td>
+  <td id="cnome">{{colab.nome}}</td>
 	<td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timelist="timeList"></time-entrance>
 </td>
@@ -63,7 +64,7 @@
 <td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timelist="timeList"></time-entrance>
 </td>
-<td><folga :get-date="monthpick" add-weeks="2"></folga></td>
+<td><folga :get-date="monthpick" :add-weeks="colab.month[0].folga"></folga></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timelist="timeList"></time-entrance>
 </td>
