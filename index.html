@@ -11,16 +11,16 @@
 </head>
 <body>
 <div id="app">
-  <div class="panel container" >
+  <div class="panel" >
   <div class="panel-header">
   <div class="message" id="mpickr">
   <div class="message-header">
-  <flat-pickr :config="mconfig" v-model="monthpick" :class="{input:true}" />
+  <flat-pickr :config="mconfig" v-model="monthpick" class="input" />
   </div>
   </div>
   </div>
   <div class="panel-block">
-<table class="table has-text-centered is-striped is-size-7">
+<table class="table has-text-centered is-striped">
 <thead><!--incio da linha com os titulos-->
 <tr>
   <th></th>
@@ -64,7 +64,7 @@
 <td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timelist="timeList"></time-entrance>
 </td>
-<td><folga :get-date="monthpick" :add-weeks="colab.month[0].folga"></folga></td>
+<td><folga :get-date="monthpick" :add-weeks="2"></folga></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timelist="timeList"></time-entrance>
 </td>
@@ -146,7 +146,7 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.1.1/dist/pouchdb.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/vuepouch.js"></script>
+<script src="js/vuepouch.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/l10n/pt.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.2/dist/plugins/monthSelect/index.js"></script>

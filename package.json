@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "http-server"
+    "test": "parcel -p 3000 index.html",
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,11 @@
   },
   "homepage": "https://github.com/luizdeveloperbr/escala-vue#readme",
   "dependencies": {
-    "http-server": "^0.11.1"
+    "http-server": "^0.11.1",
+    "parcel-bundler": "^1.12.3",
+    "vue-flatpickr-component": "^8.1.3"
+  },
+"alias": {
+    "vue" : "./node_modules/vue/dist/vue.common.js"
   }
 }
