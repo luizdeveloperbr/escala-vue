@@ -23,6 +23,7 @@
 <table class="table has-text-centered is-striped">
 <thead><!--incio da linha com os titulos-->
 <tr>
+<th></th>
   <th></th>
   <th></th>
   <th>Domingo</th>
@@ -37,11 +38,12 @@
   <th v-if="condFivDom"></th>
 </tr>
 <tr>
+<th></th>
 	<th>Mat</th>
 	<th>Colaborador</th>
-  <th><domingo add-weeks="0" :get-date="monthpick"></domingo></th>
+  <th><domingo add-weeks="0" ref="domone" :get-date="monthpick"></domingo></th>
 	<th>folga</th>
-	<th><domingo add-weeks="1" :get-date="monthpick"></domingo></th>
+	<th><domingo ref="domtwo" add-weeks="1" :get-date="monthpick"></domingo></th>
 	<th>folga</th>
 	<th><domingo add-weeks="2" :get-date="monthpick"></domingo></th>
 	<th>folga</th>
@@ -53,18 +55,19 @@
 </thead>
 <tbody>
 <tr  v-for="colab in colabList">
-  <td id="cmat">{{colab.mat}}</td>
-  <td id="cnome">{{colab.nome}}</td>
+<td class="buttons"><button class="button is-small is-danger" @click="$pouchdbRefs.horarios.remove(colab)">D</button><button class="button is-small is-success" @click="relo">E</button></td>
+  <td>{{colab.mat}}</td>
+  <td>{{colab.nome}}</td>
 	<td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timelist="timeList"></time-entrance>
 </td>
 <td><!-- data da folga-->
-  <folga :get-date="monthpick" add-weeks="1"></folga>
+  <folga :get-folga="colab.weeks[$refs.domone.wn].dia" add-weeks="1"></folga>
 </td>
 <td> <!--dropdown para seleção dos horarios-->
 <time-entrance :timelist="timeList"></time-entrance>
 </td>
-<td><folga :get-date="monthpick" :add-weeks="2"></folga></td>
+<td><folga :get-folga="colab.weeks[0].dia" add-weeks="2"></folga></td>
 <td> <!--dropdown para seleção dos horarios-->
  	<time-entrance :timelist="timeList"></time-entrance>
 </td>
@@ -110,7 +113,7 @@
     </section>
     <footer class="modal-card-foot">
       <button class="button is-success" @click="addColab">Salvar</button>
-      <button class="button" @click="modal = false">Cancelar</button>
+      <button class="button">Editar</button>
     </footer>
   </div>
 </div>

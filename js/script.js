@@ -5,12 +5,16 @@ Vue.component('domingo', {
 		display: function () {
 			return moment(this.validateDate).add(this.addWeeks, 'week').format('L')
 		},
+        wn:function(){
+        var day = moment(this.display, "DD/MM/YYYY").format('WW');
+        return day-1
+        },
 		validateDate: function () {
-			var initDate = moment(this.getDate, "MMMM YYYY", "pt-br").startOf('month').toObject();
+			var initDate = moment(this.getDate, "MMMM YYYY").startOf('month').toDate();
 			if (moment(initDate).weekday() == 0) {
-				return moment(initDate).toObject()
+				return initDate
 			} else {
-				return moment(initDate).startOf('week').add(1, 'week').toObject()
+				return moment(initDate).startOf('week').add(1, 'week').toDate()
 			}
 		},
 	},
@@ -41,8 +45,8 @@ Vue.component('timeEntrance', {
 	}
 );
 Vue.component('folga', {
-	template: '<div style="width: 55px"><flat-pickr :config="config" v-model="input" class="input is-size-7"></flat-pickr></div>',
-	props: ['getDate', 'addWeeks',],
+	template: '<div style="width: 55px;margin: auto;"><flat-pickr :config="config" v-model="input" class="input is-size-7"></flat-pickr></div>',
+	props: ['addWeeks', 'getFolga'],
     data: function(){
         return {
             input: "",
@@ -53,32 +57,15 @@ Vue.component('folga', {
             return {
                 dateFormat: "d/M",
                 minDate: this.minDate,
-                defaultDate: this.defaultDate,
+                defaultDate: this.getFolga,
                 maxDate: this.maxDate,
                 locale: "pt"
             }
         },
-        gettDate: function () {
-			var initDate = moment(this.getDate, "MMMM YYYY", "pt-br").startOf('month').toObject();
-			if (moment(initDate).weekday() == 0) {
-				var fiveDom =  moment(initDate).subtract(1, 'week').toDate();
-               return moment(fiveDom).add(this.addWeeks, 'week').toDate()
-			} else {
-				return moment(initDate).startOf('week').add(this.addWeeks, 'week').toDate()
-			}
-		},
-        defaultDate: function(){
-            var initDate = moment(this.getDate, "MMMM YYYY", "pt-br").startOf('month').toObject();
-			if (moment(initDate).weekday() == 0) {
-				var fiveDom =  moment(initDate).subtract(1, 'week').toDate();
-               return moment(fiveDom).add(this.addWeeks, 'week').format('DD/MMM')
-			} else {
-				return moment(initDate).startOf('week').add(this.addWeeks, 'week').format('DD/MMM')
-			}
-        },
-        minDate: function() {return moment(this.gettDate).subtract(9, 'day').toDate()},
+        minDate: function() {
+            return moment(this.getFolga,"DD/MMM", "pt-br").subtract(9, 'day').toDate()},
         maxDate: function (){
-			return moment(this.gettDate).add(9, 'day').toDate();
+			return moment(this.getFolga, "DD/MMM", "pt-br").add(9, 'day').toDate();
         },
 	},
     components:{vuefp},
@@ -108,18 +95,15 @@ var app = new Vue({
 		monthpick: new Date(),
 	},
 	methods:{
+        relo: () => setTimeout(function(){return window.location.reload()}, 1000),
 		addHorario: function(){
 			return this.$pouchdbRefs.horarios.put('timeList', {cod: this.horaCod, hora: this.horaEscrito})
 		},
         addColab:function(){
-            return this.$pouchdbRefs.horarios.put('colabList', {id: "teste",mat: this.colabMat, nome: this.colabNome, weeks:[{domingo:"2019-12-25",folga: 2,horario:{cod:123,hora:"testehora"}}]})
+            return this.$pouchdbRefs.horarios.put('colabList', {mat: this.colabMat, nome: this.colabNome, weeks:[{dia:"21/Out",horario:{cod:123,hora:"testehora"}}]})
         },
 	},
 	computed: {
-        weekselect:function(){
-        var day = moment(this.monthpick, "MMMM YYYY", "pt-br").format('WW');
-        return day-1
-        },
 		condFivDom: function () {
 			if (moment(this.monthpick, "MMMM YYYY", "pt-br").startOf('month').weekday() == 0) {
 				return true
