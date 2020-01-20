@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 //dados export/import
 export default new VueRouter({
     routes:[
-    {path: '/principal',
+    {path: '/principal/:setor',
     name: 'principal',
     component: principal
 }]})
